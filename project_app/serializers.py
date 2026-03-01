@@ -1,0 +1,98 @@
+from rest_framework import serializers
+
+class HousePredictSerializer(serializers.Serializer):
+    GrLivArea = serializers.IntegerField()
+    YearBuilt = serializers.IntegerField()
+    GarageCars = serializers.IntegerField()
+    TotalBsmtSF = serializers.IntegerField()
+    FullBath = serializers.IntegerField()
+    OverallQual = serializers.IntegerField()
+    Neighborhood = serializers.CharField()
+    predicted_price = serializers.FloatField(required=False)
+
+
+class DiabetesPredictSerializer(serializers.Serializer):
+    Pregnancies = serializers.IntegerField()
+    Glucose = serializers.IntegerField()
+    BloodPressure = serializers.IntegerField()
+    SkinThickness = serializers.IntegerField()
+    Insulin = serializers.IntegerField()
+    BMI = serializers.FloatField()
+    DiabetesPedigreeFunction = serializers.FloatField()
+    Age = serializers.IntegerField()
+    predicted_label = serializers.CharField(required=False)
+    probability = serializers.FloatField(required=False)
+
+class AvocadoSerializer(serializers.Serializer):
+    firmness = serializers.FloatField()
+    hue = serializers.IntegerField()
+    saturation = serializers.IntegerField()
+    brightness = serializers.IntegerField()
+    color_category = serializers.CharField()
+    sound_db = serializers.IntegerField()
+    weight_g = serializers.IntegerField()
+    size_cm3 = serializers.IntegerField()
+    predicted_label = serializers.CharField(required=False)
+
+class BankPredictSerializer(serializers.Serializer):
+    person_age = serializers.FloatField()
+    person_gender = serializers.CharField()
+    person_education = serializers.CharField()
+    person_income = serializers.FloatField()
+    person_emp_exp = serializers.IntegerField()
+    person_home_ownership = serializers.CharField()
+    loan_famnt = serializers.FloatField()
+    loan_intent = serializers.CharField()
+    loan_int_rate = serializers.FloatField()
+    loan_percent_income = serializers.FloatField()
+    cb_person_cred_hist_length = serializers.FloatField()
+    credit_score = serializers.IntegerField()
+    previous_loan_defaults_on_file = serializers.CharField()
+    predicted_result = serializers.CharField(required=False)
+
+
+
+class TitanicSerializer(serializers.Serializer):
+    Pclass = serializers.IntegerField()
+    Sex = serializers.CharField()
+    age = serializers.IntegerField()
+    Fare = serializers.FloatField()
+    SibSp = serializers.IntegerField(default=0)
+    Parch = serializers.IntegerField(default=0)
+    embarked = serializers.CharField()
+    predicted_result = serializers.CharField(required=False)
+
+
+class TelcoSerializer(serializers.Serializer):
+    gender = serializers.CharField()
+    SeniorCitizen = serializers.IntegerField()
+    Partner = serializers.CharField()
+    Dependents = serializers.CharField()
+    tenure = serializers.IntegerField()
+    PhoneService = serializers.CharField()
+    MultipleLines = serializers.CharField()
+    InternetService = serializers.CharField()
+    OnlineSecurity = serializers.CharField()
+    OnlineBackup = serializers.CharField()
+    DeviceProtection = serializers.CharField()
+    TechSupport = serializers.CharField()
+    StreamingTV = serializers.CharField()
+    StreamingMovies = serializers.CharField()
+    Contract = serializers.CharField()
+    PaperlessBilling = serializers.CharField()
+    PaymentMethod = serializers.CharField()
+    MonthlyCharges = serializers.IntegerField()
+    TotalCharges = serializers.IntegerField()
+    predicted_label = serializers.CharField(required=False)
+    probability = serializers.FloatField(required=False)
+
+
+class StudentPredictSerializer(serializers.Serializer):
+    math_score = serializers.IntegerField()
+    reading_score = serializers.IntegerField()
+    gender = serializers.CharField()
+    race_ethnicity = serializers.CharField()
+    parent_education = serializers.CharField()
+    lunch = serializers.CharField()
+    test_preparation = serializers.CharField()
+    predicted_score = serializers.FloatField(required=False)
