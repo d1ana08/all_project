@@ -12,12 +12,13 @@ from mysite.fronted.avocado_front import avocado_check
 from mysite.fronted.diabet_front import diabet_check
 from mysite.fronted.titanic_front import check_titanic
 from mysite.fronted.telco_front import check_telco
+from mysite.fronted.employee_fronted import hremployee_check
 
 
 
 with st.sidebar:
     name = st.radio('ML Models', ['Info', 'House', 'Student', 'Titanic', 'Bank',
-                                  'Diabetes', 'Avocado', 'Telco'])
+                                  'Diabetes', 'Avocado', 'Telco', 'HREmpolyee'])
 
 if name == 'Info':
     st.title('Welcome')
@@ -28,6 +29,7 @@ if name == 'Info':
     st.text('Diabetes - диагностика')
     st.text('Titanic - Выживаемость на титанике')
     st.text('Telco - клиенты телекома')
+    st.text('HREmpolyee - предсказание работников об уволнение')
 
 
 elif name == 'House':
@@ -50,3 +52,6 @@ elif name == 'Titanic':
 
 elif name == 'Telco':
     check_telco()
+
+elif name == 'HREmpolyee':
+    hremployee_check()

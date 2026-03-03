@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from .serializers import (
     HousePredictSerializer, DiabetesPredictSerializer,
     AvocadoSerializer, BankPredictSerializer, TitanicSerializer,
-    TelcoSerializer, StudentPredictSerializer
+    TelcoSerializer, StudentPredictSerializer, HREmployeePredictSerializer
 )
 
 house_model_path = os.path.join(settings.BASE_DIR, 'models/house_model.pkl')
@@ -339,3 +339,62 @@ class StudentPredict(views.APIView):
             }, status=status.HTTP_200_OK)
 
         return Response(instance.errors, status=status.HTTP_400_BAD_REQUEST)
+
+employee_model_path = os.path.join(settings.BASE_DIR, 'models/HREmployee_model (1).pkl')
+employee_model = joblib.load(employee_model_path)
+
+employee_scaler_path = os.path.join(settings.BASE_DIR, 'models/HREmployee_scaler (1).pkl')
+employee_scaler = joblib.load(employee_scaler_path)
+
+new_businessTravel = ['Travel_Rarely', 	'Travel_Frequently']
+new_department = ['Sales', 'Research & Development']
+new_educationField = ['Life Sciences', 'Other', 'Medical', 'Marketing', 'Technical Degree']
+new_gender = ['Male']
+new_overtime = ['Yes', 'No']
+
+new_jobrole = [
+    'Human Resources',
+    'Laboratory Technician',
+    'Manager',
+    'Manufacturing Director',
+    'Research Director',
+    'Research Scientist',
+    'Sales Executive',
+    'Sales Representative',
+]
+new_maritalStatus = ['Single', 'Married']
+
+class HREmployeePredict(views.APIView):
+    def post(self, request):
+        ser = HREmployeePredictSerializer(data=request.data)
+        if not ser.is_valid():
+            return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        data = ser.validated_data
+
+        # one-hot
+        department_0 = [1 if data["Department"] == i else 0 for i in new_department]
+        businessTravel_0 = [1 if data["BusinessTravel"] == i else 0 for i in new_businessTravel]
+        educationField_0 = [1 if data["EducationField"] == i else 0 for i in new_educationField]
+        gender_0 = [1 if data["Gender"] == i else 0 for i in new_gender]
+        jobrole_0 = [1 if data["JobRole"] == i else 0 for i in new_jobrole]
+        maritalStatus_0 = [1 if data["MaritalStatus"] == i else 0 for i in new_maritalStatus]
+        overtime_val = 1 if data["OverTime"] == "Yes" else 0
+
+        # фиксированный порядок чисел (ВАЖНО)
+        num_cols = [
+            "Age","DailyRate","DistanceFromHome","Education","EnvironmentSatisfaction",
+            "HourlyRate","JobInvolvement","JobLevel","JobSatisfaction","MonthlyIncome",
+            "MonthlyRate","NumCompaniesWorked","PercentSalaryHike","PerformanceRating",
+            "RelationshipSatisfaction","StockOptionLevel","TotalWorkingYears",
+            "TrainingTimesLastYear","WorkLifeBalance","YearsAtCompany","YearsInCurrentRole",
+            "YearsSinceLastPromotion","YearsWithCurrManager"
+        ]
+        num_data = [data[c] for c in num_cols]
+
+        final_data = num_data + businessTravel_0 + department_0 + educationField_0 + gender_0 + jobrole_0 + maritalStatus_0 + [overtime_val]
+
+        scaled = employee_scaler.transform([final_data])
+        pred = employee_model.predict(scaled)[0]
+
+        return Response({"prediction": pred}, status=status.HTTP_200_OK)

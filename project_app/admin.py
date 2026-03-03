@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import House, DiabetesPrediction, Avocado, Bank, Titanic, Telco, Student
+from .models import House, DiabetesPrediction, Avocado, Bank, Titanic, Telco, Student, HREmployee
 
 
 
@@ -10,3 +10,4 @@ admin.site.register(Bank)
 admin.site.register(Titanic)
 admin.site.register(Telco)
 admin.site.register(Student)
+admin.site.register(HREmployee)

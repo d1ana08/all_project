@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import HousePredict, DiabetesPredict, AvocadoPredict, BankPredict, TitanicPredict, TelcoPredict, StudentPredict
+from .views import HousePredict, DiabetesPredict, AvocadoPredict, BankPredict, TitanicPredict, TelcoPredict, StudentPredict, HREmployeePredict
 from rest_framework import routers
 
 router = routers.SimpleRouter()
@@ -11,6 +11,6 @@ urlpatterns = [
     path('bank', BankPredict.as_view(), name='bank_model'),
     path('titanic', TitanicPredict.as_view(), name='titanic_model'),
     path('telecom', TelcoPredict.as_view(), name='telco_model'),
-    path('student', StudentPredict.as_view(), name='student_model')
+    path('student', StudentPredict.as_view(), name='student_model'),
+    path('employee', HREmployeePredict.as_view(), name='employee_model')
 ]
-
